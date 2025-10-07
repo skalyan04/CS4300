@@ -90,7 +90,7 @@ class BookingAPITest(APITestCase):
         data = {
             "movie": self.movie.id,
             "seat": self.seat.id,
-            "booking_date": timezone.now()
+            "booking_date": timezone.now().isoformat()
         }
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
