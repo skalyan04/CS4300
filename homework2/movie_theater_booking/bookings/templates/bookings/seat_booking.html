@@ -4,6 +4,7 @@
 <h2>Book Seat for {{ movie.title }}</h2>
 <form method="post">
     {% csrf_token %}
+    <label for="seat">Select a seat:</label>
     <select name="seat" class="form-select">
         {% for seat in seats %}
         <option value="{{ seat.id }}" {% if seat.is_booked %}disabled{% endif %}>
@@ -13,4 +14,5 @@
     </select>
     <button type="submit" class="btn btn-success mt-2">Book Seat</button>
 </form>
+<a href="{% url 'movie_list' %}">Back to movie list</a>
 {% endblock %}

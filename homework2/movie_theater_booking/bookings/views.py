@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Movie
-
+from django.utils import timezone
 # bookings/views.py
 from rest_framework import viewsets, status
 from rest_framework.response import Response
@@ -47,13 +47,15 @@ def movie_list(request):
 def book_seat(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
     seats = Seat.objects.all()
+    # Get all available seats
+    available_seats = Seat.objects.filter(is_booked=False)
     if request.method == 'POST':
         seat_id = request.POST.get('seat')
         seat = get_object_or_404(Seat, id=seat_id)
         if not seat.is_booked:
             seat.is_booked = True
             seat.save()
-            Booking.objects.create(movie=movie, seat=seat, user=request.user)
+            Booking.objects.create(movie=movie, seat=seat, user=request.user, booking_date=timezone.now)
             return redirect('booking_history')
     return render(request, 'bookings/seat_booking.html', {'movie': movie, 'seats': seats})
 
