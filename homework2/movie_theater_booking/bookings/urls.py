@@ -1,5 +1,6 @@
 # bookings/urls.py
 from django.urls import path, include
+from . import views
 from rest_framework.routers import DefaultRouter
 from .views import MovieViewSet, SeatViewSet, BookingViewSet, movie_list, book_seat, booking_history
 
