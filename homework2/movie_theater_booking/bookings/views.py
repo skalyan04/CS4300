@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import Movie
 
 # bookings/views.py
 from rest_framework import viewsets, status
