@@ -16,10 +16,9 @@ class SeatSerializer(serializers.ModelSerializer):
 
 # Serializer for Booking model
 class BookingSerializer(serializers.ModelSerializer):
-    movie = MovieSerializer(read_only=True)
-    seat = SeatSerializer(read_only=True)
+    movie = serializers.PrimaryKeyRelatedField(queryset=Movie.objects.all())
+    seat = serializers.PrimaryKeyRelatedField(queryset=Seat.objects.all())
     user = serializers.StringRelatedField(read_only=True)
-
     class Meta:
         model = Booking
         fields = '__all__'
