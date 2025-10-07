@@ -1,5 +1,8 @@
 from django.shortcuts import render
-from .models import Movie
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from .serializers import MovieSerializer, SeatSerializer, BookingSerializer
+from .models import Movie, Seat, Booking
 from django.utils import timezone
 # bookings/views.py
 from rest_framework import viewsets, status
@@ -14,11 +17,13 @@ from .serializers import MovieSerializer, SeatSerializer, BookingSerializer
 class MovieViewSet(viewsets.ModelViewSet):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 # Seat API view
 class SeatViewSet(viewsets.ModelViewSet):
     queryset = Seat.objects.all()
     serializer_class = SeatSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     # Custom action to book a seat
     @action(detail=True, methods=['post'])
@@ -34,7 +39,7 @@ class SeatViewSet(viewsets.ModelViewSet):
 class BookingViewSet(viewsets.ModelViewSet):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
-
+    permission_classes = [IsAuthenticatedOrReadOnly]
 # --- Views for templates ---
 
 # Show movies
